@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    app:cardCornerRadius="7dp">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/tv_dialog_magic_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="15dp"
+            android:textColor="@color/color_393939"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_goneMarginTop="15dp"
+            tools:text="这是一个title" />
+
+        <View
+            android:id="@+id/view_dialog_magic_line"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginTop="15dp"
+            android:background="@color/default_line_gray"
+            app:layout_constraintTop_toBottomOf="@+id/tv_dialog_magic_title" />
+
+        <ImageView
+            android:id="@+id/iv_dialog_magic_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="15dp"
+            android:maxHeight="100dp"
+            android:maxWidth="100dp"
+            android:src="@mipmap/ic_launcher_round"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_dialog_magic_line"
+            android:layout_marginRight="8dp" />
+
+        <TextView
+            android:minHeight="40dp"
+            android:id="@+id/tv_dialog_magic_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="温馨提示"
+            android:textColor="@color/color_393939"
+            android:textSize="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_dialog_magic_icon" />
+
+        <EditText
+            android:id="@+id/et_dialog_magic_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:minHeight="40dp"
+            android:textColor="@color/color_393939"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_dialog_magic_content"
+            app:layout_goneMarginTop="20dp" />
+
+        <View
+            android:id="@+id/view_dialog_magic_line2"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginTop="20dp"
+            android:background="@color/default_line_gray"
+            app:layout_constraintTop_toBottomOf="@+id/et_dialog_magic_content" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/view_dialog_magic_line2">
+
+            <Button
+                android:id="@+id/btn_dialog_magic_negative"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:gravity="center"
+                android:text="取消"
+                android:textColor="@color/default_btn"
+                android:textSize="15sp"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintRight_toLeftOf="@+id/view_dialog_magic_line3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view_dialog_magic_line2" />
+
+            <View
+                android:id="@+id/view_dialog_magic_line3"
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:background="@color/default_line_gray"
+                app:layout_constraintRight_toLeftOf="@+id/btn_dialog_magic_positive"
+                app:layout_constraintStart_toEndOf="@id/btn_dialog_magic_negative"
+                app:layout_constraintTop_toBottomOf="@+id/view_dialog_magic_line2" />
+
+            <Button
+                android:id="@+id/btn_dialog_magic_positive"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:gravity="center"
+                android:text="确定"
+                android:textColor="@color/default_blue"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintStart_toEndOf="@+id/view_dialog_magic_line3"
+                app:layout_constraintTop_toBottomOf="@+id/view_dialog_magic_line2" />
+        </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>
