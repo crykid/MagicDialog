@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
                         .negativeEvent("cancle", view -> {
 
                         })
-//                        .recyclerView(null)
+                        .recyclerView(null)
                         .bottomDismissEvent()
                         .cancelAble(false)
                         .build()
