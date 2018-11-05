@@ -17,21 +17,18 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 new MagicDialog.Builder(MainActivity.this)
                         .title("this is title")
-                        .icon(R.drawable.ic_launcher_background)
+                        .icon(R.mipmap.ic_launcher_round)
                         .content("this is content")
                         .input("please enter", "")
-                        .positiveEvent("confim", new MagicDialog.OnPositiveClickListener() {
-                            @Override
-                            public void onPositive(View view) {
+                        .positiveEvent("confim", view -> {
 
-                            }
                         })
-                        .negativeEvent("cancle", new MagicDialog.OnNegativeClickListener() {
-                            @Override
-                            public void onNegative(View view) {
+                        .negativeEvent("cancle", view -> {
 
-                            }
                         })
+//                        .recyclerView(null)
+                        .bottomDismissEvent()
+                        .cancelAble(false)
                         .build()
                         .show();
             }

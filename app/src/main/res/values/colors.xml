@@ -8,5 +8,6 @@
     <color name="default_line_gray">#dcdcdc</color>
     <color name="default_btn">#3d9dff</color>
     <color name="default_blue">#3d9dff</color>
+    <color name="transparent">@android:color/transparent</color>
 
 </resources>

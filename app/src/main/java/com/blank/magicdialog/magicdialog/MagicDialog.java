@@ -6,6 +6,10 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.StringRes;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -67,6 +71,8 @@ public class MagicDialog extends Dialog {
     TextView tvContent;
     @BindView(R.id.et_dialog_magic_content)
     EditText etContent;
+    @BindView(R.id.recyclerv_dialog_magic_recyclerv)
+    RecyclerView recyclerView;
     @BindView(R.id.view_dialog_magic_line2)
     View viewLine2;
     @BindView(R.id.btn_dialog_magic_negative)
@@ -75,7 +81,8 @@ public class MagicDialog extends Dialog {
     View viewLine3;
     @BindView(R.id.btn_dialog_magic_positive)
     Button btnPositive;
-
+    @BindView(R.id.iv_dialog_magic_close)
+    ImageView ivBtnClose;
     private Context mContext;
     /**
      * 是否有title
@@ -92,15 +99,26 @@ public class MagicDialog extends Dialog {
 
     private String title;
 
+    private int contentGravity = -1;
+
     private int iconRes;
     private Uri iconUri;
     private String iconPath;
 
     private String content;
+
+    private RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView.Adapter mAdapter;
+    private SpannableString spanContent;
+
     private String inputContent;
     private String hint;
     private String negativeBtnText;
     private String positiveBtnText;
+
+    private final boolean hasBottomNegative;
+
+    private boolean cancelAble;
 
     /**
      * 当这两个都不为空的时候，需要显示中间的竖线
@@ -128,6 +146,12 @@ public class MagicDialog extends Dialog {
         private String iconPath;
 
         private String content;
+
+        private RecyclerView.LayoutManager mLayoutManager;
+        private RecyclerView.Adapter mAdapter;
+
+        private int contentGravity = -1;
+        private SpannableString spanContent;
         private String inputContent;
         private String hint;
         private String negativeBtnText;
@@ -135,6 +159,9 @@ public class MagicDialog extends Dialog {
 
         private OnPositiveClickListener mPositiveListener = null;
         private OnNegativeClickListener mNegativeListener = null;
+
+        private boolean cancelAble = true;
+        public boolean hasBottomNegative;
 
         public Builder(Context context) {
             this.mContext = context;
@@ -201,6 +228,58 @@ public class MagicDialog extends Dialog {
         }
 
         /**
+         * 设置内容区域文字
+         *
+         * @param content String 要显示的文字
+         * @param gravity int 在文本中显示方式，eg：Gravity.CENTER
+         * @return
+         */
+        public Builder content(SpannableString content, int gravity) {
+            this.hasContent = true;
+            this.spanContent = content;
+            this.contentGravity = gravity;
+            return this;
+        }
+
+        /**
+         * 设置内容区域文字
+         *
+         * @param contentId
+         * @return
+         */
+        public Builder content(@StringRes int contentId) {
+            this.hasContent = true;
+            String localContent = mContext.getString(contentId);
+            this.content = localContent;
+            return this;
+        }
+
+        /**
+         * 显示RecyclerView，默认垂直排列
+         *
+         * @param adapter RecyclerViewAdapter 列表适配器
+         * @return
+         */
+        public Builder recyclerView(RecyclerView.Adapter adapter) {
+            this.mAdapter = adapter;
+            return this;
+        }
+
+        /**
+         * 显示RecyclerView
+         *
+         * @param manager RecyclerView.LayoutManager
+         * @param adapter RecyclerViewAdapter
+         * @return
+         */
+        public Builder recyclerView(RecyclerView.LayoutManager manager, RecyclerView.Adapter adapter) {
+            this.mLayoutManager = manager;
+            this.mAdapter = adapter;
+            return this;
+        }
+
+
+        /**
          * 设置输入框
          *
          * @param hint
@@ -229,6 +308,19 @@ public class MagicDialog extends Dialog {
         }
 
         /**
+         * 设置取消/返回等类型的按钮
+         *
+         * @param text String   按钮文字
+         * @return
+         */
+        public Builder negativeEvent(String text) {
+            this.hasNegative = true;
+            this.negativeBtnText = text;
+            return this;
+        }
+
+
+        /**
          * 设置确定/确认等类型的按钮
          *
          * @param text     按钮文字
@@ -242,6 +334,52 @@ public class MagicDialog extends Dialog {
             return this;
         }
 
+        /**
+         * 没有回调的"积极性"按钮
+         *
+         * @param text
+         * @return
+         */
+        public Builder positiveEvent(String text) {
+            this.hasPositive = true;
+            this.positiveBtnText = text;
+            return this;
+        }
+
+
+        /**
+         * 设置底部取消/返回等类型的按钮
+         *
+         * @param listener 回调
+         * @return
+         */
+        public Builder bottomDismissEvent(OnNegativeClickListener listener) {
+            this.hasBottomNegative = true;
+            this.mNegativeListener = listener;
+            return this;
+        }
+
+        /**
+         * 设置底部取消/返回等类型的按钮
+         *
+         * @return
+         */
+        public Builder bottomDismissEvent() {
+            this.hasBottomNegative = true;
+            return this;
+        }
+
+        /**
+         * 是否允许点击弹窗外部或返回按键隐藏弹窗
+         *
+         * @param enable boolean ：ture-允许，fasle-不允许
+         * @return
+         */
+        public Builder cancelAble(boolean enable) {
+            this.cancelAble = enable;
+            return this;
+        }
+
         public MagicDialog build() {
             return new MagicDialog(this);
         }
@@ -251,6 +389,7 @@ public class MagicDialog extends Dialog {
 
     private MagicDialog(Builder builder) {
         super(builder.mContext, R.style.PopDialog);
+
         this.mContext = builder.mContext;
         this.hasTitle = builder.hasTitle;
         this.hasIcon = builder.hasIcon;
@@ -258,6 +397,7 @@ public class MagicDialog extends Dialog {
         this.contentEditAble = builder.contentEditAble;
 
         this.hasNegative = builder.hasNegative;
+        this.hasBottomNegative = builder.hasBottomNegative;
         this.hasPositive = builder.hasPositive;
 
 
@@ -268,13 +408,20 @@ public class MagicDialog extends Dialog {
         this.iconPath = builder.iconPath;
 
         this.content = builder.content;
+
+        this.mLayoutManager = builder.mLayoutManager;
+        this.mAdapter = builder.mAdapter;
+
+        this.spanContent = builder.spanContent;
+        this.contentGravity = builder.contentGravity;
         this.inputContent = builder.inputContent;
         this.hint = builder.hint;
         this.negativeBtnText = builder.negativeBtnText;
         this.positiveBtnText = builder.positiveBtnText;
         this.mNegativeListener = builder.mNegativeListener;
         this.mPositiveListener = builder.mPositiveListener;
-        ScreenTool.init(mContext);
+        this.cancelAble = builder.cancelAble;
+
         initView();
 
 
@@ -316,10 +463,35 @@ public class MagicDialog extends Dialog {
         //显示内容
         if (hasContent) {
             tvContent.setVisibility(View.VISIBLE);
-            tvContent.setText(content);
+            if (!TextUtils.isEmpty(content))
+                tvContent.setText(content);
+            if (spanContent != null) {
+                tvContent.setText(spanContent);
+            }
+            if (contentGravity > 0) {
+                tvContent.setGravity(contentGravity);
+            }
         } else {
             tvContent.setVisibility(View.GONE);
         }
+
+
+        //列表
+        if (mAdapter != null) {
+            recyclerView.setVisibility(View.VISIBLE);
+
+            if (mLayoutManager != null) {
+                recyclerView.setLayoutManager(mLayoutManager);
+            } else {
+                recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+            }
+
+            recyclerView.setAdapter(mAdapter);
+        } else {
+            recyclerView.setVisibility(View.GONE);
+
+        }
+
         //内容输入框
         if (contentEditAble) {
             etContent.setVisibility(View.VISIBLE);
@@ -372,6 +544,21 @@ public class MagicDialog extends Dialog {
             viewLine3.setVisibility(View.GONE);
         }
 
+        //底部关闭按钮
+        if (hasBottomNegative) {
+            ivBtnClose.setVisibility(View.VISIBLE);
+            ivBtnClose.setEnabled(true);
+            ivBtnClose.setOnClickListener(v -> {
+                cancel();
+                if (mNegativeListener != null) {
+                    mNegativeListener.onNegative(v);
+                }
+            });
+        } else {
+            ivBtnClose.setVisibility(View.GONE);
+            ivBtnClose.setEnabled(false);
+        }
+
 
         Window window = getWindow();
         if (window != null) {
@@ -383,6 +570,9 @@ public class MagicDialog extends Dialog {
             //透明
             window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             window.setAttributes(wl);
+
+            this.setCancelable(cancelAble);
+            this.setCanceledOnTouchOutside(cancelAble);
         }
 
     }
