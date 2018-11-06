@@ -53,8 +53,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        RecyclerView.LayoutManager manager = new LinearLayoutManager(this);
-
 
     }
 }
