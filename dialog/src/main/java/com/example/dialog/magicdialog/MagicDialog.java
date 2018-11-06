@@ -24,11 +24,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.dialog.R;
-import com.example.dialog.R2;
 import com.example.dialog.ScreenTool;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by : blank
@@ -61,29 +58,28 @@ import butterknife.ButterKnife;
 
 public class MagicDialog extends Dialog {
 
-    @BindView(R2.id.tv_dialog_magic_title)
     TextView tvTitle;
     //注：这个图片在xml中设置了最大宽高100dp
-    @BindView(R2.id.iv_dialog_magic_icon)
     ImageView ivIcon;
-    @BindView(R2.id.view_dialog_magic_line)
+    //title下的横线
     View viewLine;
-    @BindView(R2.id.tv_dialog_magic_content)
+    //主内容
     TextView tvContent;
-    @BindView(R2.id.et_dialog_magic_content)
+    //内容输入框
     EditText etContent;
-    @BindView(R2.id.recyclerv_dialog_magic_recyclerv)
+    //列表
     RecyclerView recyclerView;
-    @BindView(R2.id.view_dialog_magic_line2)
+    //按钮区域顶部的横线
     View viewLine2;
-    @BindView(R2.id.btn_dialog_magic_negative)
+    //表否定的按钮
     Button btnNegative;
-    @BindView(R2.id.view_dialog_magic_line3)
+    //两个按钮中间的竖线
     View viewLine3;
-    @BindView(R2.id.btn_dialog_magic_positive)
+    //表积极性的按钮
     Button btnPositive;
-    @BindView(R2.id.iv_dialog_magic_close)
+    //当需要引导用户点击积极性按钮时，底部关闭按钮
     ImageView ivBtnClose;
+
     private Context mContext;
     /**
      * 是否有title
@@ -388,6 +384,10 @@ public class MagicDialog extends Dialog {
 
     }
 
+    /**
+     * 通过Builder初始化
+     * @param builder
+     */
     private MagicDialog(Builder builder) {
         super(builder.mContext, R.style.PopDialog);
 
@@ -433,8 +433,7 @@ public class MagicDialog extends Dialog {
 
         View rootView = LayoutInflater.from(mContext).inflate(R.layout.dialog_magic, null, false);
         setContentView(rootView);
-
-        ButterKnife.bind(this, rootView);
+        findView(rootView);
 
         //title
         if (hasTitle) {
@@ -576,6 +575,22 @@ public class MagicDialog extends Dialog {
             this.setCanceledOnTouchOutside(cancelAble);
         }
 
+    }
+
+    private void findView(View rootView) {
+        tvTitle = rootView.findViewById(R.id.tv_dialog_magic_title);
+
+        //注：这个图片在xml中设置了最大宽高100dp
+        ivIcon = rootView.findViewById(R.id.iv_dialog_magic_icon);
+        viewLine = rootView.findViewById(R.id.view_dialog_magic_line);
+        tvContent = rootView.findViewById(R.id.tv_dialog_magic_content);
+        etContent = rootView.findViewById(R.id.et_dialog_magic_content);
+        recyclerView = rootView.findViewById(R.id.recyclerv_dialog_magic_recyclerv);
+        viewLine2 = rootView.findViewById(R.id.view_dialog_magic_line2);
+        btnNegative = rootView.findViewById(R.id.btn_dialog_magic_negative);
+        viewLine3 = rootView.findViewById(R.id.view_dialog_magic_line3);
+        btnPositive = rootView.findViewById(R.id.btn_dialog_magic_positive);
+        ivBtnClose = rootView.findViewById(R.id.iv_dialog_magic_close);
     }
 
     /**
