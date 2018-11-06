@@ -1,4 +1,4 @@
-package com.blank.magicdialog.magicdialog;
+package com.example.dialog.magicdialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -22,9 +22,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.blank.magicdialog.R;
-import com.blank.magicdialog.ScreenTool;
 import com.bumptech.glide.Glide;
+import com.example.dialog.R;
+import com.example.dialog.R2;
+import com.example.dialog.ScreenTool;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,28 +61,28 @@ import butterknife.ButterKnife;
 
 public class MagicDialog extends Dialog {
 
-    @BindView(R.id.tv_dialog_magic_title)
+    @BindView(R2.id.tv_dialog_magic_title)
     TextView tvTitle;
     //注：这个图片在xml中设置了最大宽高100dp
-    @BindView(R.id.iv_dialog_magic_icon)
+    @BindView(R2.id.iv_dialog_magic_icon)
     ImageView ivIcon;
-    @BindView(R.id.view_dialog_magic_line)
+    @BindView(R2.id.view_dialog_magic_line)
     View viewLine;
-    @BindView(R.id.tv_dialog_magic_content)
+    @BindView(R2.id.tv_dialog_magic_content)
     TextView tvContent;
-    @BindView(R.id.et_dialog_magic_content)
+    @BindView(R2.id.et_dialog_magic_content)
     EditText etContent;
-    @BindView(R.id.recyclerv_dialog_magic_recyclerv)
+    @BindView(R2.id.recyclerv_dialog_magic_recyclerv)
     RecyclerView recyclerView;
-    @BindView(R.id.view_dialog_magic_line2)
+    @BindView(R2.id.view_dialog_magic_line2)
     View viewLine2;
-    @BindView(R.id.btn_dialog_magic_negative)
+    @BindView(R2.id.btn_dialog_magic_negative)
     Button btnNegative;
-    @BindView(R.id.view_dialog_magic_line3)
+    @BindView(R2.id.view_dialog_magic_line3)
     View viewLine3;
-    @BindView(R.id.btn_dialog_magic_positive)
+    @BindView(R2.id.btn_dialog_magic_positive)
     Button btnPositive;
-    @BindView(R.id.iv_dialog_magic_close)
+    @BindView(R2.id.iv_dialog_magic_close)
     ImageView ivBtnClose;
     private Context mContext;
     /**
@@ -564,7 +565,7 @@ public class MagicDialog extends Dialog {
         if (window != null) {
             window.setWindowAnimations(R.style.centerInOut);
             WindowManager.LayoutParams wl = window.getAttributes();
-            wl.width = (int) (ScreenTool.getScreenWidth() * 0.8);
+            wl.width = (int) (ScreenTool.getScreenWidth(mContext) * 0.8);
             wl.height = ViewGroup.LayoutParams.WRAP_CONTENT;
             wl.gravity = Gravity.CENTER;
             //透明

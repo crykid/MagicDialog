@@ -68,7 +68,6 @@
                 android:adjustViewBounds="true"
                 android:maxHeight="100dp"
                 android:maxWidth="100dp"
-                android:src="@mipmap/ic_launcher_round"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ll_dialog_magic_bg" />
@@ -147,7 +146,7 @@
                     android:background="@null"
                     android:gravity="center"
                     android:text="取消"
-                    android:textColor="@color/default_btn"
+                    android:textColor="@color/default_blue"
                     android:textSize="15sp"
                     app:layout_constraintHorizontal_chainStyle="spread"
                     app:layout_constraintRight_toLeftOf="@+id/view_dialog_magic_line3"

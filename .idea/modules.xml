@@ -3,9 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MagicDialog.iml" filepath="$PROJECT_DIR$/MagicDialog.iml" />
-      <module fileurl="file://$PROJECT_DIR$/MagicDialog.iml" filepath="$PROJECT_DIR$/MagicDialog.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dialog/dialog.iml" filepath="$PROJECT_DIR$/dialog/dialog.iml" />
     </modules>
   </component>
 </project>
