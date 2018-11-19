@@ -27,8 +27,11 @@ public class MainActivity extends AppCompatActivity {
                         .negativeEvent("cancel", view -> {
 
                         })
-                        .divider(R.color.default_blue)
                         .recyclerView(null)
+                        //分割线颜色
+                        .divider(R.color.default_blue)
+                        //不要分割线
+                        //.withoutDivider()
                         .bottomDismissEvent()
                         .cancelAble(false)
                         .build()

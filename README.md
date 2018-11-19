@@ -47,6 +47,10 @@ dependencies {
                         })
                         //添加列表并添加adapter
                         .recyclerView(null)
+                         //分割线颜色
+                        .divider(R.color.default_blue)
+                        //不要分割线
+                        //.withoutDivider()
                         //当需要引导用户点击确认时底部的关闭按钮
                         .bottomDismissEvent(v->{ //doSth })
                         //是否允许点击外部或返回取消弹窗
@@ -92,3 +96,10 @@ builder.recyclerView(mAdapter,manager);
 ####	5.最后一些补充
 >目前这些功能仅仅是我近一个月中所需功能的概括，可能并不能满足您的需求，不过我会很快更新一些其它的功能出来。
 >例如：不能更改Theme，主动控制dismiss()/cancel(),progress,按钮点击动效，以及没有使用butterknife等等，后期如果需要我会加上的
+
+
+## 三.更新提示
+- v1.0.1更新内容：
+
+	添加分割线的控制，使用方式见二.3
+
