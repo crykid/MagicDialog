@@ -5,8 +5,10 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
@@ -25,7 +27,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.dialog.R;
 import com.example.dialog.ScreenTool;
-
 
 /**
  * Created by : blank
@@ -81,6 +82,12 @@ public class MagicDialog extends Dialog {
     ImageView ivBtnClose;
 
     private Context mContext;
+
+    /**
+     * 分割线默认宽度
+     */
+    private static final int DEFAULT_DIVIDER_WIDTH = 1;
+
     /**
      * 是否有title
      * 注：当有title的时候需要显示顶部横线
@@ -116,6 +123,13 @@ public class MagicDialog extends Dialog {
     private final boolean hasBottomNegative;
 
     private boolean cancelAble;
+
+    //是否包含分割线
+    private boolean hasDivider = true;
+    //分割线颜色
+    private final int dividerColor;
+    //分割线宽度
+    private final int dividerWidth;
 
     /**
      * 当这两个都不为空的时候，需要显示中间的竖线
@@ -158,7 +172,11 @@ public class MagicDialog extends Dialog {
         private OnNegativeClickListener mNegativeListener = null;
 
         private boolean cancelAble = true;
-        public boolean hasBottomNegative;
+        private boolean hasBottomNegative;
+        //是否有分割线
+        private boolean hasDivider = true;
+        private int dividerWidth;
+        private int dividerColor;
 
         public Builder(Context context) {
             this.mContext = context;
@@ -377,15 +395,43 @@ public class MagicDialog extends Dialog {
             return this;
         }
 
+        /**
+         * 不要分割线
+         *
+         * @return
+         */
+        public Builder withoutDivider() {
+            this.hasDivider = false;
+            return this;
+        }
+
+        public Builder divider(@ColorRes int colorId) {
+            return divider(DEFAULT_DIVIDER_WIDTH, colorId);
+        }
+
+        /**
+         * 设置分割线
+         *
+         * @param width   分割线宽度
+         * @param colorId 分割线颜色
+         * @return
+         */
+        public Builder divider(int width, @ColorRes int colorId) {
+            this.hasDivider = true;
+            this.dividerWidth = width;
+            this.dividerColor = ContextCompat.getColor(mContext, colorId);
+            return this;
+        }
+
         public MagicDialog build() {
             return new MagicDialog(this);
         }
-
 
     }
 
     /**
      * 通过Builder初始化
+     *
      * @param builder
      */
     private MagicDialog(Builder builder) {
@@ -423,6 +469,10 @@ public class MagicDialog extends Dialog {
         this.mPositiveListener = builder.mPositiveListener;
         this.cancelAble = builder.cancelAble;
 
+        this.hasDivider = builder.hasDivider;
+        this.dividerColor = builder.dividerColor;
+        this.dividerWidth = builder.dividerWidth;
+
         initView();
 
 
@@ -435,10 +485,23 @@ public class MagicDialog extends Dialog {
         setContentView(rootView);
         findView(rootView);
 
+        //设置分割线颜色
+        if (hasDivider && dividerColor != 0) {
+            viewLine.setBackgroundColor(this.dividerColor);
+            viewLine2.setBackgroundColor(this.dividerColor);
+            viewLine3.setBackgroundColor(this.dividerColor);
+        }
+
+
         //title
         if (hasTitle) {
             tvTitle.setVisibility(View.VISIBLE);
-            viewLine.setVisibility(View.VISIBLE);
+            //分割线
+            if (hasDivider) {
+                viewLine.setVisibility(View.VISIBLE);
+            } else {
+                viewLine.setVisibility(View.GONE);
+            }
             tvTitle.setText(title);
         } else {
             tvTitle.setVisibility(View.GONE);
@@ -519,6 +582,8 @@ public class MagicDialog extends Dialog {
             btnNegative.setVisibility(View.GONE);
         }
         btnNegative.setEnabled(hasNegative);
+
+
         //确定按钮
         if (hasPositive) {
             btnPositive.setVisibility(View.VISIBLE);
@@ -537,8 +602,18 @@ public class MagicDialog extends Dialog {
         }
         btnNegative.setEnabled(hasPositive);
 
+        //按钮上部分割线
+        if (hasNegative || hasPositive) {
+            if (hasDivider) {
+                viewLine2.setVisibility(View.VISIBLE);
+            } else {
+                viewLine2.setVisibility(View.GONE);
+
+            }
+        }
+
         //两个按钮都存在时显示中间竖线
-        if (hasPositive && hasNegative) {
+        if (hasPositive && hasNegative && hasDivider) {
             viewLine3.setVisibility(View.VISIBLE);
         } else {
             viewLine3.setVisibility(View.GONE);

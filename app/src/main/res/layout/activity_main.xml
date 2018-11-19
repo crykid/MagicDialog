@@ -4,13 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.blank.magicdialog.MainActivity">
 
     <Button
         android:id="@+id/tv"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="MagicDialog"
-        />
+        android:text="MagicDialog" />
+
+    <Button
+        android:id="@+id/btn_main_simple"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="simple" />
+    <Button
+        android:id="@+id/btn_main_sys"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="system" />
 
 </LinearLayout>

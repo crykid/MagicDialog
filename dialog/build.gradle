@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-//butterknife 插件，生成R2文件
 android {
     compileSdkVersion 27
 
