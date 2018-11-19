@@ -21,7 +21,7 @@ allprojects {
 ```
 dependencies {
 	//这一行	
-	implementation 'com.github.crykid:MagicDialog:v1.0.0'
+	implementation 'com.github.crykid:MagicDialog:v1.0.1'
 }
 ```
 
